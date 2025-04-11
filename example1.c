@@ -50,7 +50,7 @@ GPH *create_g(int v)
     int i;
     GPH *g = malloc(sizeof(GPH));
     g->v = v;
-    g->alst = malloc(sizeof(NODE *));
+    g->alst = malloc(sizeof(NODE));
     g->vis = malloc(sizeof(int) * v);
 
     for (int i = 0; i < v; i++)
@@ -92,7 +92,7 @@ void DFS(GPH *g, STK *s, int v_nr)
         int con_ver = aux->data;
 
         if (g->vis[con_ver] == 0)
-            DFS(&g, &s, con_ver);
+            DFS(g,s,con_ver);
         aux = aux->next;
     }
 }
@@ -120,7 +120,7 @@ void wipe(GPH *g, int nrv)
 
 void canbe(GPH *g, int nrv, STK *s1, STK *s2)
 { // 0 sau 1 daca poate fi sau nu ajuns
-    int *canbe = calloc(5, sizeof(int));
+    int *canbe = calloc(nrv, sizeof(int));
     int ans = 0;
 
     for (int i = 0; i < nrv; i++) // aici i tine loc de numar adica de restaurant
@@ -150,20 +150,20 @@ int main()
     int virtex_2;
     int ans;
 
-    printf("cate noduri are girafa?");
+    printf("cate noduri are girafa?\n");
     scanf("%d", &nrv);
 
-    printf("cate muchii are giraful?");
+    printf("cate muchii are giraful?\n");
     scanf("%d", &edg_nr);
 
-    GPH *g = create_g(&nrv);
+    GPH *g = create_g(nrv);
 
     STK *s1 = create_s(2 * nrv);
     STK *s2 = create_s(2 * nrv);
 
-    insert_edges(&g, edg_nr, nrv);
+    insert_edges(g, edg_nr, nrv);
 
-    canbe(&g, nrv, &s1, &s2);
+    canbe(g, nrv, s1, s2);
 
     return 0;
 }
