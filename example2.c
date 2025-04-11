@@ -61,7 +61,7 @@ int *insedg(int nr_of_vertices, int nr_of_edges, GPH *graph)
 
     for (i = 0; i < nr_of_edges; i++)
     {
-        scanf("%d%d", &src, *&dest);
+        scanf("%d%d", &src, &dest);
         add_edge(graph, src, dest);
     }
 }
@@ -72,7 +72,7 @@ int is_empty(NODE *queue)
     return queue == NULL;
 }
 
-void enqueue(NODE ***queue, int data)
+void enqueue(NODE **queue, int data)
 {
     NODE *new_node = create_node(data);
 
@@ -111,7 +111,7 @@ void print_graph(GPH *graph)
         while (temp)
         {
             printf("%d ", temp->data);
-            temp = temp->next->data;
+            temp = temp->next;
         }
         printf("\n");
     }
@@ -165,7 +165,7 @@ void BFS(GPH *graph, int start)
     while (!is_empty(queue))
     {
         int current = dequeue(&queue);
-        printf("%d ", current);
+        printf("%d->", current);
 
         NODE *temp = graph->adjacency_lists[current];
 
@@ -176,7 +176,7 @@ void BFS(GPH *graph, int start)
             if (graph->visited[adj_vertex] == 0)
             {
                 graph->visited[adj_vertex] = 1;
-                enqueue(&*queue, adj_vertex);
+                enqueue(&queue, adj_vertex);
             }
             temp = temp->next;
         }
@@ -192,10 +192,10 @@ int main()
     int starting_vertex;
     int *adj_matrix;
 
-    printf("cate noduri are graful?");
+    printf("cate noduri are graful?\n");
     scanf("%d", &nr_of_vertices);
 
-    printf("cate muchii are graful?");
+    printf("cate muchii are graful?\n");
     scanf("%d", &nr_of_edges);
 
     GPH *graph = create_graph(nr_of_vertices);
